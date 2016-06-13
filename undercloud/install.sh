@@ -25,7 +25,8 @@ export USE_DELOREAN_TRUNK=1
 export DELOREAN_TRUNK_REPO="http://trunk.rdoproject.org/centos7/current-tripleo/"
 export DELOREAN_REPO_FILE="delorean.repo"
 export DIB_INSTALLTYPE_puppet_modules=source
-openstack overcloud image build --all
+openstack overcloud image build --all;
+openstack overcloud image upload;
 
 wget https://bootstrap.pypa.io/get-pip.py;
 sudo python get-pip.py;
