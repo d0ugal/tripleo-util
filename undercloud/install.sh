@@ -16,6 +16,7 @@ EOF"
 sudo curl -o /etc/yum.repos.d/delorean-deps.repo http://trunk.rdoproject.org/centos7/delorean-deps.repo
 sudo yum -y install yum-plugin-priorities vim
 sudo yum install -y python-tripleoclient
+export DIB_INSTALLTYPE_puppet_modules=source
 openstack undercloud install
 
 source ~/stackrc
@@ -23,6 +24,7 @@ export NODE_DIST=centos7
 export USE_DELOREAN_TRUNK=1
 export DELOREAN_TRUNK_REPO="http://trunk.rdoproject.org/centos7/current-tripleo/"
 export DELOREAN_REPO_FILE="delorean.repo"
+export DIB_INSTALLTYPE_puppet_modules=source
 openstack overcloud image build --all;
 openstack overcloud image upload;
 
