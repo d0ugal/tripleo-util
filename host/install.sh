@@ -16,5 +16,3 @@ EOF"
 sudo curl -o /etc/yum.repos.d/delorean-deps.repo http://trunk.rdoproject.org/centos7/delorean-deps.repo
 
 sudo yum install -y instack-undercloud
-
-./restack.sh
