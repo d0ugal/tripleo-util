@@ -24,3 +24,7 @@ sudo pip install virtualenv git-review;
 
 git clone https://github.com/openstack/python-tripleoclient.git;
 git clone https://github.com/openstack/tripleo-common.git;
+
+virtualenv ~/venv
+virtualenv ~/venv-tripleodash;
+~/venv-tripleodash/bin/pip install python-tripleodash;
