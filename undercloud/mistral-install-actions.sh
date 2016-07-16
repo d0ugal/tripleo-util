@@ -2,6 +2,7 @@
 set -eu
 set -o pipefail
 
+cd ~/tripleo-common;
 sudo rm -Rf /usr/lib/python2.7/site-packages/tripleo_common*
 sudo python setup.py install
 sudo systemctl restart openstack-mistral-executor
