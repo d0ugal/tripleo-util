@@ -22,6 +22,9 @@ wget https://bootstrap.pypa.io/get-pip.py;
 sudo python get-pip.py;
 sudo pip install virtualenv git-review;
 
+git config --global user.email "dougal@redhat.com"
+git config --global user.name "Dougal Matthews"
+
 git clone https://github.com/openstack/python-tripleoclient.git;
 git clone https://github.com/openstack/tripleo-common.git;
 
