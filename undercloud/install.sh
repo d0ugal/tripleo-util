@@ -6,7 +6,7 @@ if [[ $USER != "stack" ]]; then
 fi
 
 sudo yum upgrade -y;
-sudo yum install -y vim libffi-devel libssl-devel openssl-devel;
+sudo yum install -y vim libffi-devel libssl-devel openssl-devel python-devel;
 
 rm -rf ~/tripleo-ci
 git clone https://github.com/openstack-infra/tripleo-ci.git ~/tripleo-ci
