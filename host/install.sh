@@ -5,11 +5,12 @@ if [[ $USER != "stack" ]]; then
 	exit 1;
 fi
 
-rm -rf ~/tripleo-quickstart;
-git clone https://github.com/openstack/tripleo-quickstart.git ~/tripleo-quickstart;
+rm -rf ~/tripleo-ci
+git clone https://github.com/openstack-infra/tripleo-ci.git ~/tripleo-ci
 
-bash ~/tripleo-quickstart/quickstart.sh --install-deps;
-bash ~/tripleo-quickstart/quickstart.sh \
-    --extra-vars @config/general_config/devmode.yml \
-    --release master \
-    localhost;
+export DELOREAN_REPO_URL="http://buildlogs.centos.org/centos/7/cloud/x86_64/rdo-trunk-master-tripleo/"
+export DELOREAN_STABLE_REPO_URL="http://buildlogs.centos.org/centos/7/cloud/x86_64/rdo-trunk-$STABLE_RELEASE/"
+
+~/tripleo-ci/scripts/tripleo.sh --repo-setup
+
+sudo yum install -y instack-undercloud
