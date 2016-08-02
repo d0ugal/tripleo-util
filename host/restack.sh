@@ -15,5 +15,5 @@ export NODE_CPU=4;
 export NODE_MEM=16384;
 export UNDERCLOUD_NODE_CPU=4;
 export UNDERCLOUD_NODE_MEM=16384;
-export NODE_COUNT=3;
+export NODE_COUNT=6;
 instack-virt-setup;
