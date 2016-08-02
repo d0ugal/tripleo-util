@@ -10,4 +10,4 @@ git clone https://github.com/openstack-infra/tripleo-ci.git ~/tripleo-ci
 
 ~/tripleo-ci/scripts/tripleo.sh --repo-setup
 
-sudo yum install -y instack-undercloud
+sudo yum install -y epel-release instack-undercloud
