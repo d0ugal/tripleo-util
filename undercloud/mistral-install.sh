@@ -6,10 +6,10 @@ echo "INSTALLING tripleo-common";
 cd ~/tripleo-common;
 sudo rm -Rf /usr/lib/python2.7/site-packages/tripleo_common*
 sudo python setup.py install
-sudo systemctl restart openstack-mistral-executor
-sudo systemctl restart openstack-mistral-engine
-# this loads the actions via entrypoints
+sudo systemctl restart openstack-mistral-*;
+sleep 10;
 
+# this loads the actions via entrypoints
 echo  "LOADING ACTIONS";
 sudo mistral-db-manage populate
 # make sure the new actions got loaded
