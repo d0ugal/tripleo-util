@@ -1,4 +1,6 @@
-#!/bin/bash -xe
+#!/bin/bash
+set -eux
+set -o pipefail
 
 if [[ $USER != "stack" ]]; then
   echo "Must be run as stack user.";
