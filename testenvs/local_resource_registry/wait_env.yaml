@@ -1,0 +1,2 @@
+resource_registry:
+  OS::TripleO::NodeUserData: userdata_wait.yaml

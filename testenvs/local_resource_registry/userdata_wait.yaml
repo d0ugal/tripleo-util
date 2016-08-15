@@ -1,0 +1,19 @@
+heat_template_version: 2014-10-16
+
+resources:
+  userdata:
+    type: OS::Heat::MultipartMime
+    properties:
+      parts:
+      - config: {get_resource: wait_config}
+
+  wait_config:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      config: |
+        #!/bin/bash
+        until curl http://169.254.169.254/latest/meta-data/; do sleep 10; done
+
+outputs:
+  OS::stack_id:
+    value: {get_resource: userdata}
