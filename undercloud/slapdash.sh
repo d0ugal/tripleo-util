@@ -5,5 +5,5 @@ set -o pipefail
 openstack stack list;
 mistral execution-list;
 mistral action-execution-list;
-swift list overcloud;
+swift list overcloud | grep "user-";
 mistral environment-get overcloud;
