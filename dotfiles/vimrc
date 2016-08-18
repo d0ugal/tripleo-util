@@ -1,11 +1,42 @@
-set tabstop=4
+" Sets how many lines of history VIM has to remember
+set history=500
+
+" Enable filetype plugins
+filetype plugin on
+filetype indent on
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" With a map leader it's possible to do extra key combinations
+" like <leader>w saves the current file
+let mapleader = ","
+let g:mapleader = ","
+
+" Use spaces instead of tabs
 set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
 set shiftwidth=4
 set softtabstop=4
 
-syntax on
+" Enable syntax highlighting
+syntax enable
 
+" Add a margin at 80 chars
 set colorcolumn=80
 
+" Turn on line numbers
 set numberwidth=5
 set number
+
+" Remove trailing whitespace on save
+autocmd BufWritePre *.py :%s/\s\+$//e
+
+" Turn backup off, since most stuff is in SVN, git et.c anyway...
+set nobackup
+set nowb
+set noswapfile
