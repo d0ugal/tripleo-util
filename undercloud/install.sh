@@ -30,3 +30,5 @@ git clone https://github.com/openstack/tripleo-common.git;
 virtualenv ~/venv
 virtualenv ~/venv-tripleodash;
 ~/venv-tripleodash/bin/pip install python-tripleodash;
+
+cp ~/tripleo-util/dotfiles/vimrc ~/.vimrc
