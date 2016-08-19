@@ -1,0 +1,2 @@
+resource_registry:
+  OS::TripleO::Controller: local_controller.yaml
