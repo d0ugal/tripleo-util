@@ -1,6 +1,5 @@
 #!/bin/bash
-set -eux
-set -o pipefail
+set -ux
 
 swift delete overcloud;
 mistral environment-delete overcloud;
