@@ -3,6 +3,7 @@ set -eux
 set -o pipefail
 
 TRIPLEO_ROOT=~
+
 ~/venv/bin/openstack overcloud deploy \
     --templates=$TRIPLEO_ROOT/tripleo-heat-templates \
     -e $TRIPLEO_ROOT/tripleo-heat-templates/environments/network-isolation.yaml \
@@ -11,4 +12,5 @@ TRIPLEO_ROOT=~
     -e $TRIPLEO_ROOT/tripleo-heat-templates/environments/puppet-ceph-devel.yaml \
     -e $TRIPLEO_ROOT/tripleo-heat-templates/environments/mongodb-nojournal.yaml \
     # -e $TRIPLEO_ROOT/custom.yaml \
-    --ntp-server 94.229.74.162
+    --ntp-server 94.229.74.162 \
+    --stack brokencloud;
