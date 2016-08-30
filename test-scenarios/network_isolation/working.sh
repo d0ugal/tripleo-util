@@ -12,5 +12,4 @@ TRIPLEO_ROOT=~/tripleo-heat-templates/;
     -e $TRIPLEO_ROOT/environments/puppet-ceph-devel.yaml \
     -e $TRIPLEO_ROOT/environments/mongodb-nojournal.yaml \ \
     -e custom.yaml \
-    --ntp-server 94.229.74.162 \
-    --stack workingcloud;
+    --ntp-server 94.229.74.162;
