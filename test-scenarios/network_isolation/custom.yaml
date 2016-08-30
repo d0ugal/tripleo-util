@@ -1,0 +1,18 @@
+parameter_defaults:
+  CephStorageCount: 1
+  BlockStorageCount: 0
+  ObjectStorageCount: 0
+  ComputeCount: 1
+  ControllerCount: 1
+
+  ControllerExtraConfig:
+    neutron::global_physnet_mtu: 1400
+  ComputeExtraConfig:
+    neutron::global_physnet_mtu: 1400
+
+  SoftwareConfigTransport: POLL_TEMP_URL
+  ExternalAllocationPools: [{'start': '10.0.0.10', 'end': '10.0.0.90'}]
+  ControlPlaneDefaultRoute: 172.19.0.1
+  EC2MetadataIp: 172.19.0.3
+  DnsServers: ['8.8.8.8']
+  NtpServer: '94.229.74.162'

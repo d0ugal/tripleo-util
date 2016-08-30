@@ -11,5 +11,6 @@ TRIPLEO_ROOT=~
     -e $TRIPLEO_ROOT/tripleo-heat-templates/environments/puppet-pacemaker.yaml \
     -e $TRIPLEO_ROOT/tripleo-heat-templates/environments/puppet-ceph-devel.yaml \
     -e $TRIPLEO_ROOT/tripleo-heat-templates/environments/mongodb-nojournal.yaml \
+    -e custom.yaml \
     --ntp-server 94.229.74.162 \
     --stack brokencloud;
