@@ -8,3 +8,5 @@ for exec_id in $exec_ids; do
     ironic node-set-provision-state $exec_id manage;
   fi
 done
+
+ironic node-list;
