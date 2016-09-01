@@ -3,9 +3,10 @@ set -eux
 set -o pipefail
 
 echo "INSTALLING tripleo-common";
-cd ~/tripleo-common;
+sudo rm -Rf /usr/lib/python2.7/site-packages/mistral*
+sudo python setup.py install ~/mistral;
 sudo rm -Rf /usr/lib/python2.7/site-packages/tripleo_common*
-sudo python setup.py install
+sudo python setup.py install ~/tripleo-common;
 sudo systemctl restart openstack-mistral-*;
 sleep 10;
 

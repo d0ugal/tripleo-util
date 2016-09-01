@@ -23,9 +23,11 @@ sudo pip install virtualenv git-review;
 
 git config --global user.email "dougal@redhat.com"
 git config --global user.name "Dougal Matthews"
+git config --global --add gitreview.username "dougal"
 
 git clone https://github.com/openstack/python-tripleoclient.git;
 git clone https://github.com/openstack/tripleo-common.git;
+git clone https://github.com/openstack/mistral.git;
 
 virtualenv ~/venv
 virtualenv ~/venv-tripleodash;
