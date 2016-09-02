@@ -1,6 +1,5 @@
 #!/bin/bash
-set -eux
-set -o pipefail
+set -ux
 
 openstack stack list;
 mistral execution-list;
