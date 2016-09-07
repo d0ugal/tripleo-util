@@ -1,7 +1,8 @@
 #!/bin/bash
-set -ux
 
 ~/tripleo-util/update.sh;
+
+set -ux
 
 openstack stack list;
 mistral execution-list;
