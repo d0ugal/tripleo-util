@@ -16,8 +16,6 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 
-
-
 " Sets how many lines of history VIM has to remember
 set history=500
 
