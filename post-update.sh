@@ -9,4 +9,4 @@ else
 fi
 
 cp ~/tripleo-util/dotfiles/vimrc ~/.vimrc;
-vim +PluginInstall +qall;
+vim -i NONE -c VundleUpdate -c quitall;
