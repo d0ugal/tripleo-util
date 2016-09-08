@@ -9,4 +9,3 @@ else
 fi
 
 cp ~/tripleo-util/dotfiles/vimrc ~/.vimrc;
-vim -i NONE -c VundleUpdate -c quitall;
