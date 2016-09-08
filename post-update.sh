@@ -8,4 +8,5 @@ else
     popd;
 fi
 
-cp ~/tripleo-util/dotfiles/vimrc ~/.vimrc
+cp ~/tripleo-util/dotfiles/vimrc ~/.vimrc;
+vim +PluginInstall +qall;
