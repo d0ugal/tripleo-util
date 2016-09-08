@@ -10,10 +10,10 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" Airline
+" Plugins!
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-let g:airline#extensions#tabline#enabled = 1
+Plugin 'ctrlpvim/ctrlp.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -58,3 +58,10 @@ autocmd BufWritePre *.py :%s/\s\+$//e
 set nobackup
 set nowb
 set noswapfile
+
+" Airline config
+let g:airline#extensions#tabline#enabled = 1
+
+" ctrlp config
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
