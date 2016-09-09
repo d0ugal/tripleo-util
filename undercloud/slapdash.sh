@@ -11,4 +11,4 @@ openstack overcloud plan list;
 swift list;
 mistral environment-list;
 swift list overcloud | grep "user-";
-mistral environment-get overcloud;
+mistral environment-get overcloud  | cut -c 1-230;
