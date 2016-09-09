@@ -1,6 +1,7 @@
 #!/bin/bash
-
-~/tripleo-util/update.sh;
+{
+  ~/tripleo-util/update.sh;
+} &> /dev/null
 
 set -ux
 
