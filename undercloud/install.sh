@@ -33,4 +33,4 @@ virtualenv ~/venv
 virtualenv ~/venv-tripleodash;
 ~/venv-tripleodash/bin/pip install python-tripleodash;
 
-~/tripleo-util/undercloud/post-update.sh
+~/tripleo-util/post-update.sh
