@@ -7,6 +7,8 @@ if [[ $USER != "stack" ]]; then
 	exit 1;
 fi
 
+sudo yum install -y yum-utils;
+
 rm -rf ~/tripleo-ci
 git clone https://github.com/openstack-infra/tripleo-ci.git ~/tripleo-ci
 
