@@ -7,6 +7,9 @@ if [[ $USER != "stack" ]]; then
 	exit 1;
 fi
 
+sudo yum upgrade -y;
+~/tripleo-util/update.sh;
+
 sudo virsh destroy instack || true;
 sudo virsh undefine instack || true;
 virsh destroy instack || true;
