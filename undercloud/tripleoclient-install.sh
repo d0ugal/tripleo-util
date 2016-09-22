@@ -4,6 +4,5 @@ set -o pipefail
 
 rm -rf ~/venv;
 virtualenv ~/venv;
-~/venv/bin/pip install -r ~/python-tripleoclient/requirements.txt
-~/venv/bin/pip install git+git://github.com/openstack/tripleo-common.git@master
+~/venv/bin/pip install osprofiler
 ~/venv/bin/pip install --editable ~/python-tripleoclient;
