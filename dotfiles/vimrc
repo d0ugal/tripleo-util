@@ -66,3 +66,7 @@ let g:airline_powerline_fonts = 1
 " ctrlp config
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+
+" Cycle through buffers with n
+:nnoremap <C-n> :bnext<CR>
+:nnoremap <C-N> :bprevious<CR>
