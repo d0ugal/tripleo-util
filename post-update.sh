@@ -9,3 +9,4 @@ else
 fi
 
 cp ~/tripleo-util/dotfiles/vimrc ~/.vimrc;
+cp ~/tripleo-util/dotfiles/bashrc ~/.bashrc;
