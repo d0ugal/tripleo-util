@@ -28,9 +28,9 @@ git config --global --add gitreview.username "dougal"
 git clone https://github.com/openstack/python-tripleoclient.git;
 git clone https://github.com/openstack/tripleo-common.git;
 git clone https://github.com/openstack/mistral.git;
+git clone https://github.com/d0ugal/python-tripleodash.git
 
 virtualenv ~/venv
-virtualenv ~/venv-tripleodash;
-~/venv-tripleodash/bin/pip install python-tripleodash;
+~/tripleo-util/undercloud/tripleodash-install.sh
 
 ~/tripleo-util/post-update.sh
