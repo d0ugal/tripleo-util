@@ -33,4 +33,6 @@ git clone https://github.com/d0ugal/python-tripleodash.git
 virtualenv ~/venv
 ~/tripleo-util/undercloud/tripleodash-install.sh
 
+~/tripleo-util/undercloud/openstack-register-nodes.sh
+
 ~/tripleo-util/post-update.sh
