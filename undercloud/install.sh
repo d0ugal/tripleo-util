@@ -15,6 +15,9 @@ git clone https://github.com/openstack-infra/tripleo-ci.git ~/tripleo-ci
 
 ~/tripleo-ci/scripts/tripleo.sh --repo-setup
 ~/tripleo-ci/scripts/tripleo.sh --undercloud
+
+sudo systemctl restart openstack-ironic-*;
+
 ~/tripleo-ci/scripts/tripleo.sh --overcloud-images
 
 source ~/stackrc;
