@@ -25,7 +25,7 @@ source ~/stackrc;
 
 wget https://bootstrap.pypa.io/get-pip.py;
 sudo python get-pip.py;
-sudo pip install virtualenv git-review;
+sudo pip install -IU virtualenv setuptools git-review;
 
 git config --global user.email "dougal@redhat.com"
 git config --global user.name "Dougal Matthews"
