@@ -29,15 +29,12 @@ git config --global user.email "dougal@redhat.com"
 git config --global user.name "Dougal Matthews"
 git config --global --add gitreview.username "dougal"
 
+mkdir -p ~/code;
+pushd ~/code;
 git clone https://github.com/d0ugal/python-tripleodash.git
+popd;
 
 virtualenv ~/venv
 
 ~/tripleo-util/undercloud/tripleodash-install.sh
 ~/tripleo-util/post-update.sh
-
-~/tripleo-ci/scripts/tripleo.sh --delorean-build openstack/instack-undercloud
-~/tripleo-ci/scripts/tripleo.sh --delorean-build openstack/python-tripleoclient
-~/tripleo-ci/scripts/tripleo.sh --delorean-build openstack/tripleo-common
-~/tripleo-ci/scripts/tripleo.sh --delorean-build openstack/mistral
-~/tripleo-ci/scripts/tripleo.sh --delorean-build openstack/python-mistralclient
