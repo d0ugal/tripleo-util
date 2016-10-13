@@ -1,7 +1,6 @@
 # TripleO Utils
 
-Some TripleO dev tools, you shouldn't use this unless you plan on debugging it
-yourself.
+Some TripleO dev tools, you shouldn't use this unless you are called Dougal.
 
 ## Host
 
