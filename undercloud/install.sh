@@ -12,9 +12,6 @@ sudo yum install -y ack vim libffi-devel libssl-devel openssl-devel python-devel
 
 rm -rf ~/tripleo-ci
 git clone https://github.com/openstack-infra/tripleo-ci.git ~/tripleo-ci
-pushd ~/tripleo-ci;
-git fetch https://git.openstack.org/openstack-infra/tripleo-ci refs/changes/42/388542/1 && git checkout FETCH_HEAD;
-popd;
 
 ~/tripleo-ci/scripts/tripleo.sh --repo-setup
 ~/tripleo-ci/scripts/tripleo.sh --undercloud
