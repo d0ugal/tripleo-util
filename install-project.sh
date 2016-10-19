@@ -10,7 +10,7 @@ fi
 TRIPLEO_ROOT=${TRIPLEO_ROOT:-$HOME/tripleo}
 
 PROJ=$1
-REVIEW=$2
+REVIEW=${2:-""}
 
 
 # Clone the repo if it doesn't yet exist
