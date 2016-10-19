@@ -15,12 +15,24 @@ REVIEW=$2
 
 # Clone the repo if it doesn't yet exist
 if [ ! -d $TRIPLEO_ROOT/$PROJ ]; then
+    echo "Cloning the repo..."
     git clone https://git.openstack.org/openstack/$PROJ.git $TRIPLEO_ROOT/$PROJ
 fi
 
-pushd $TRIPLEO_ROOT/$PROJ;
-git review -d $REVIEW;
-popd;
+if [ ! -z $REVIEW ] then
+    echo "Getting review...";
+    pushd $TRIPLEO_ROOT/$PROJ;
+    git review -d $REVIEW;
+    git show -s;
+    popd;
+else
+    echo "Installing checked out version..."
+    pushd $TRIPLEO_ROOT/$PROJ;
+    git show -s;
+    popd;
+fi
+
+echo "Installing ^^";
 
 ~/tripleo-ci/scripts/tripleo.sh --delorean-build openstack/$PROJ;
 
