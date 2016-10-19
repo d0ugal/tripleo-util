@@ -19,7 +19,7 @@ if [ ! -d $TRIPLEO_ROOT/$PROJ ]; then
     git clone https://git.openstack.org/openstack/$PROJ.git $TRIPLEO_ROOT/$PROJ
 fi
 
-if [ ! -z $REVIEW ] then
+if [ ! -z $REVIEW ]; then
     echo "Getting review...";
     pushd $TRIPLEO_ROOT/$PROJ;
     git review -d $REVIEW;
