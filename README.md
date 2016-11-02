@@ -25,8 +25,8 @@ Finally this.
 
 ```bash
 git clone https://github.com/d0ugal/tripleo-util.git;
-./tripleo-util/host/install.sh;
-./tripleo-util/host/restack.sh;
+~/tripleo-util/host/install.sh;
+~/tripleo-util/host/restack.sh;
 ```
 
 ## Undercloud
@@ -41,5 +41,5 @@ and finally
 
 ```bash
 git clone https://github.com/d0ugal/tripleo-util.git;
-./tripleo-util/undercloud/install.sh;
+~/tripleo-util/undercloud/install.sh;
 ```
