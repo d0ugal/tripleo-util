@@ -2,8 +2,6 @@
 set -eux
 set -o pipefail
 
-~/tripleo-util/install-review.sh tripleo-common
-
 echo "Restarting Mistral";
 sudo systemctl restart openstack-mistral-*;
 sleep 10;
