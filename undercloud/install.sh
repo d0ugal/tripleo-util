@@ -14,14 +14,14 @@ sudo yum install -y libffi-devel libssl-devel openssl-devel python-devel;
 rm -rf ~/tripleo-ci
 git clone https://github.com/openstack-infra/tripleo-ci.git ~/tripleo-ci
 
+wget https://bootstrap.pypa.io/get-pip.py;
+sudo python get-pip.py;
+sudo pip install -IU virtualenv setuptools git-review;
+
 ~/tripleo-ci/scripts/tripleo.sh --repo-setup
 ~/tripleo-ci/scripts/tripleo.sh --undercloud
 ~/tripleo-ci/scripts/tripleo.sh --overcloud-images
 ~/tripleo-ci/scripts/tripleo.sh --delorean-setup
-
-wget https://bootstrap.pypa.io/get-pip.py;
-sudo python get-pip.py;
-sudo pip install -IU virtualenv setuptools git-review;
 
 git config --global user.email "dougal@redhat.com"
 git config --global user.name "Dougal Matthews"
