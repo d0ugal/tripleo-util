@@ -4,7 +4,7 @@ Some TripleO dev tools, you shouldn't use this unless you are called Dougal.
 
 ## Host
 
-Run this.
+First. tmux.
 
 ```bash
 sudo yum upgrade -y
@@ -15,31 +15,30 @@ tmux
 Then this.
 
 ```bash
-sudo useradd stack
-echo "stack ALL=(root) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/stack
-sudo chmod 0440 /etc/sudoers.d/stack
-su - stack
+sudo useradd stack;
+echo "stack ALL=(root) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/stack;
+sudo chmod 0440 /etc/sudoers.d/stack;
+su - stack;
 ```
+
+As the stack user.
+
+``
+ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
+sudo sh -c 'cat /home/stack/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys'
+``
 
 Finally this.
 
 ```bash
-git clone https://github.com/d0ugal/tripleo-util.git;
-~/tripleo-util/host/install.sh;
-~/tripleo-util/host/restack.sh;
+wget https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh;
+chmod +x quickstart.sh;
+./quickstart.sh --install-deps;
+./quickstart.sh --bootstrap -R master-tripleo-ci 127.0.0.2;
 ```
 
-## Undercloud
+## restack
 
-After the above, you should, be connected to the undercloud. Then do this
-
-```bash
-su - stack
 ```
-
-and finally
-
-```bash
-git clone https://github.com/d0ugal/tripleo-util.git;
-~/tripleo-util/undercloud/install.sh;
+./quickstart.sh --bootstrap --teardown all -R master-tripleo-ci 127.0.0.2;
 ```
