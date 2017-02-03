@@ -23,22 +23,19 @@ su - stack;
 
 As the stack user.
 
-``
-ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
-sudo sh -c 'cat /home/stack/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys'
-``
+```
+git clone https://github.com/d0ugal/tripleo-util.git;
+~/tripleo-util/host/install.sh;
+```
 
-Finally this.
+Then to connect to the undercloud...
 
-```bash
-wget https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh;
-chmod +x quickstart.sh;
-./quickstart.sh --install-deps;
-./quickstart.sh --bootstrap -R master-tripleo-ci 127.0.0.2;
+```
+~/u.sh
 ```
 
 ## restack
 
 ```
-./quickstart.sh --bootstrap --teardown all -R master-tripleo-ci 127.0.0.2;
+~/tripleo-util/host/restack.sh;
 ```
