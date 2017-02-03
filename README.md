@@ -31,7 +31,7 @@ git clone https://github.com/d0ugal/tripleo-util.git;
 Then to connect to the undercloud...
 
 ```
-~/u.sh
+~/tripleo-util/u.sh
 ```
 
 ## restack
