@@ -5,4 +5,4 @@ git fetch --all;
 git reset origin/master --hard;
 popd;
 
-~/tripleo-util/post-update.sh;
+~/tripleo-util/dotfiles/install.sh;
