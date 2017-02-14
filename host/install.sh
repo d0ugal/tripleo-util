@@ -7,10 +7,15 @@ if [[ $USER != "stack" ]]; then
     exit 1;
 fi
 
-ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
-sudo sh -c 'cat /home/stack/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys'
+if [ ! -f ~/.ssh/id_rsa ]; then
+    ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
+    sudo sh -c 'cat /home/stack/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys'
+fi
 
-wget https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh;
-chmod +x quickstart.sh;
+if [ ! -f quickstart.sh ]; then
+    wget https://raw.githubusercontent.com/openstack/tripleo-quickstart/master/quickstart.sh;
+    chmod +x quickstart.sh;
+fi
+
 ./quickstart.sh --install-deps;
 ./quickstart.sh --bootstrap -R master-tripleo-ci 127.0.0.2;
