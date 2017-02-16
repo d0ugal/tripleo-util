@@ -17,5 +17,5 @@ if [ ! -f quickstart.sh ]; then
     chmod +x quickstart.sh;
 fi
 
-./quickstart.sh --install-deps;
-./quickstart.sh --bootstrap -R master-tripleo-ci 127.0.0.2;
+~/quickstart.sh --install-deps;
+~/quickstart.sh --bootstrap -R master-tripleo-ci 127.0.0.2;
