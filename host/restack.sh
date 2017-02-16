@@ -7,4 +7,7 @@ if [[ $USER != "stack" ]]; then
     exit 1;
 fi
 
-./quickstart.sh --bootstrap --teardown all -R master-tripleo-ci 127.0.0.2;
+# http://i1.kym-cdn.com/photos/images/facebook/000/511/991/3a5.jpg
+rm -rf ~/*;
+git clone https://github.com/d0ugal/tripleo-util.git;
+~/tripleo-util/host/install.sh;
