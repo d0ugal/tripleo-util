@@ -7,6 +7,8 @@ if [[ $USER != "stack" ]]; then
     exit 1;
 fi
 
+git clone https://github.com/openstack-infra/tripleo-ci.git;
+
 wget https://bootstrap.pypa.io/get-pip.py;
 sudo python get-pip.py;
 sudo pip install -IU virtualenv setuptools git-review;
