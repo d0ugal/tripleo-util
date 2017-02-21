@@ -7,7 +7,7 @@ if [[ $USER != "stack" ]]; then
     exit 1;
 fi
 
-sudo yum install -y wget;
+sudo yum install -y wget python-dev gcc;
 
 git clone https://github.com/openstack-infra/tripleo-ci.git;
 
