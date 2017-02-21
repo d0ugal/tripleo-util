@@ -31,4 +31,4 @@ echo "Installing ^^";
 
 ~/tripleo-ci/scripts/tripleo.sh --delorean-build openstack/$PROJ;
 
-sudo yum install -y ~/tripleo/delorean/data/repos/*/*/*/*$PROJ*.noarch.rpm
+sudo yum install -y ~/tripleo/delorean/data/repos/current/*$PROJ*.noarch.rpm
