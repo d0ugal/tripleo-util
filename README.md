@@ -39,3 +39,11 @@ Then to connect to the undercloud...
 ```
 ~/tripleo-util/host/restack.sh;
 ```
+
+
+## undercloud
+
+```
+git clone https://github.com/d0ugal/tripleo-util.git;
+~/tripleo-util/undercloud/install.sh;
+```
