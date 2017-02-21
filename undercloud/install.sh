@@ -25,7 +25,9 @@ git config --global --add gitreview.username "dougal"
 
 mkdir -p ~/code;
 pushd ~/code;
-git clone https://github.com/d0ugal/python-tripleodash.git
+if [ ! -d python-tripleodash ]; then
+    git clone https://github.com/d0ugal/python-tripleodash.git;
+fi
 popd;
 
 virtualenv ~/venv
