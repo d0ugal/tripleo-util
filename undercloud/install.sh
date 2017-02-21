@@ -4,10 +4,12 @@ set -o pipefail
 
 sudo yum install -y wget python-dev gcc vim;
 
-if [ ! -d ~/tripleo-ci ]; then
-    git clone https://github.com/openstack-infra/tripleo-ci.git;
-    ~/tripleo-ci/scripts/tripleo.sh --delorean-setup;
+if [ -d ~/tripleo-ci ]; then
+    rm -rf ~/tripleo-ci;
 fi
+
+git clone https://github.com/openstack-infra/tripleo-ci.git;
+~/tripleo-ci/scripts/tripleo.sh --delorean-setup;
 
 if [ ! -f ~/get-pip.py ]; then
     wget https://bootstrap.pypa.io/get-pip.py;
