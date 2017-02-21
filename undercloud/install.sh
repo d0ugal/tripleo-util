@@ -13,9 +13,11 @@ if [ ! -d ~/tripleo-ci ]; then
     git clone https://github.com/openstack-infra/tripleo-ci.git;
 fi
 
-wget https://bootstrap.pypa.io/get-pip.py;
-sudo python get-pip.py;
-sudo pip install -IU virtualenv setuptools git-review;
+if [ ! -f ~/get-pip.py ]; then
+    wget https://bootstrap.pypa.io/get-pip.py;
+    sudo python get-pip.py;
+    sudo pip install -IU virtualenv setuptools git-review;
+fi
 
 git config --global user.email "dougal@redhat.com"
 git config --global user.name "Dougal Matthews"
