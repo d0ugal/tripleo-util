@@ -7,9 +7,11 @@ if [[ $USER != "stack" ]]; then
     exit 1;
 fi
 
-sudo yum install -y wget python-dev gcc;
+sudo yum install -y wget python-dev gcc vim;
 
-git clone https://github.com/openstack-infra/tripleo-ci.git;
+if [ ! -d ~/tripleo-ci ]; then
+    git clone https://github.com/openstack-infra/tripleo-ci.git;
+fi
 
 wget https://bootstrap.pypa.io/get-pip.py;
 sudo python get-pip.py;
