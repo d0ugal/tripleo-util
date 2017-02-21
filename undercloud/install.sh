@@ -2,11 +2,6 @@
 set -eux
 set -o pipefail
 
-if [[ $USER != "stack" ]]; then
-    echo "Must be run as stack user.";
-    exit 1;
-fi
-
 sudo yum install -y wget python-dev gcc vim;
 
 if [ ! -d ~/tripleo-ci ]; then
