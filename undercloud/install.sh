@@ -11,6 +11,7 @@ sudo yum install -y wget python-dev gcc vim;
 
 if [ ! -d ~/tripleo-ci ]; then
     git clone https://github.com/openstack-infra/tripleo-ci.git;
+    ~/tripleo-ci/scripts/tripleo.sh --delorean-setup;
 fi
 
 if [ ! -f ~/get-pip.py ]; then
