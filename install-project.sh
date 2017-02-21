@@ -2,9 +2,9 @@
 set -eux
 set -o pipefail
 
-if [[ $USER != "stack" ]]; then
-  echo "Must be run as stack user.";
-	exit 1;
+if [[ $USER != "heap" ]]; then
+    echo "Must be run as heap user.";
+    exit 1;
 fi
 
 TRIPLEO_ROOT=${TRIPLEO_ROOT:-$HOME/tripleo}

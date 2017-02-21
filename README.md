@@ -15,13 +15,13 @@ tmux
 Then this.
 
 ```bash
-sudo useradd stack;
-echo "stack ALL=(root) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/stack;
-sudo chmod 0440 /etc/sudoers.d/stack;
-su - stack;
+sudo useradd heap;
+echo "heap ALL=(root) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/heap;
+sudo chmod 0440 /etc/sudoers.d/heap;
+su - heap;
 ```
 
-As the stack user.
+As the heap user.
 
 ```
 git clone https://github.com/d0ugal/tripleo-util.git;

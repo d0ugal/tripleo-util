@@ -2,14 +2,14 @@
 set -eux
 set -o pipefail
 
-if [[ $USER != "stack" ]]; then
-    echo "Must be run as stack user.";
+if [[ $USER != "heap" ]]; then
+    echo "Must be run as heap user.";
     exit 1;
 fi
 
 if [ ! -f ~/.ssh/id_rsa ]; then
     ssh-keygen -f ~/.ssh/id_rsa -t rsa -N ''
-    sudo sh -c 'cat /home/stack/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys'
+    sudo sh -c 'cat /home/heap/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys'
 fi
 
 if [ ! -f quickstart.sh ]; then
