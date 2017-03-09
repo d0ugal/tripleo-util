@@ -2,18 +2,17 @@
 set -eux
 set -o pipefail
 
-sudo yum install -y wget python-dev gcc vim;
+sudo yum install -y python-virtualenv
 
-if [ ! -f ~/get-pip.py ]; then
-    wget https://bootstrap.pypa.io/get-pip.py;
-    sudo python get-pip.py;
-    sudo pip install -IU virtualenv git-review;
+if [ ! -f ~/venv ]; then
+    virtualenv ~/venv
 fi
+
+source ~/venv/bin/activate
+pip install -U pip
 
 git config --global user.email "dougal@redhat.com"
 git config --global user.name "Dougal Matthews"
 git config --global --add gitreview.username "dougal"
-
-virtualenv ~/venv
 
 ~/tripleo-util/dotfiles/install.sh
