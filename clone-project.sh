@@ -2,7 +2,8 @@
 set -eux
 set -o pipefail
 
-TRIPLEO_ROOT=${TRIPLEO_ROOT:-$HOME/tripleo}
+ROOT=${TRIPLEO_ROOT:-$HOME/code}
+mkdir -p $ROOT
 
 PROJ=$1
 REVIEW=${2:-""}
@@ -26,9 +27,3 @@ else
     git show -s;
     popd;
 fi
-
-echo "Installing ^^";
-
-~/tripleo-ci/scripts/tripleo.sh --delorean-build openstack/$PROJ;
-
-sudo yum install -y ~/tripleo/delorean/data/repos/current/*$PROJ*.noarch.rpm
