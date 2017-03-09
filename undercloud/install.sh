@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo yum install -y python-virtualenv python-pip wget gcc vim openssh-devel
+sudo yum install -y python-virtualenv python-pip wget gcc vim openssh-devel openssl-devel
 sudo pip install git-review
 
 if [ ! -f ~/venv ]; then
