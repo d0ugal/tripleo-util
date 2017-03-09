@@ -18,4 +18,6 @@ if [ ! -f quickstart.sh ]; then
 fi
 
 ~/quickstart.sh --install-deps;
-~/quickstart.sh --bootstrap -R master-tripleo-ci 127.0.0.2;
+~/quickstart.sh --bootstrap -R master-tripleo-ci 127.0.0.2 \
+    --extra-vars ssl_overcloud=false \
+    --extra-vars undercloud_generate_service_certificate=false;
