@@ -1,6 +1,4 @@
 #!/bin/bash
-set -eux
-set -o pipefail
 
 sudo yum install -y python-virtualenv
 
