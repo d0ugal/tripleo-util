@@ -1,6 +1,7 @@
 #!/bin/bash
 
-sudo yum install -y python-virtualenv
+sudo yum install -y python-virtualenv python-pip
+sudo pip install git-review
 
 if [ ! -f ~/venv ]; then
     virtualenv ~/venv
