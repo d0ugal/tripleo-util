@@ -8,7 +8,7 @@ if [ ! -f ~/venv ]; then
 fi
 
 source ~/venv/bin/activate
-pip install -U pip setuptools
+pip install -U six pip setuptools
 
 git config --global user.email "dougal@redhat.com"
 git config --global user.name "Dougal Matthews"
