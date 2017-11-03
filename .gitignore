@@ -1,0 +1,10 @@
+.ansible
+.ara
+.bash_history
+.cache
+.local
+.novaclient
+.quickstart
+.ssh
+openrc.sh
+tripleo-quickstart
