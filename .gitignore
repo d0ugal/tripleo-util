@@ -1,7 +1,11 @@
 .ansible
 .ara
 .bash_history
+.bash_logout
+.bash_profile
+.bashrc
 .cache
+.dockerenv
 .local
 .novaclient
 .quickstart
