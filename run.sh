@@ -24,5 +24,7 @@ export WORKSPACE=$HOME/.quickstart;
 export ZUUL_CHANGES='openstack/mistral:master:refs/changes/62/490562/20';
 export OPT_ADDITIONAL_PARAMETERS=" --extra-vars @config/general_config/featureset007.yml";
 
-bash ~/tripleo-quickstart/quickstart.sh --install-deps;
-bash ~/tripleo-quickstart/devmode.sh -d --ovb;
+dt="$(date "+%Y-%m-%d_%H-%M_%s")";
+
+bash ~/tripleo-quickstart/quickstart.sh --install-deps 2>&1 | tee -a logs/install.deps.$dt.log;
+bash ~/tripleo-quickstart/devmode.sh -d --ovb 2>&1 | tee -a logs/ovb.$dt.log;
