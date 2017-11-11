@@ -7,6 +7,8 @@ if [ -f /.dockerenv ]; then
     exit 0;
 fi
 
+echo "Building and starting container";
+
 cd "$(dirname "$0")";
 
 PWD=${PWD};

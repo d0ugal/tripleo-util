@@ -7,6 +7,8 @@ if [ ! -f /.dockerenv ]; then
     exit 0;
 fi
 
+echo "Running quickstart"
+
 # We want the root user to have the same keys as us.
 if [ ! -f ~/.ssh/id_rsa ]; then
     ssh-keygen -f ~/.ssh/id_rsa -t rsa -N '';
