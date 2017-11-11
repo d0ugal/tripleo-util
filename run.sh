@@ -2,6 +2,11 @@
 set -eux
 set -o pipefail
 
+if [ ! -f /.dockerenv ]; then
+    echo "This must be run within a docker container";
+    exit 0;
+fi
+
 # We want the root user to have the same keys as us.
 if [ ! -f ~/.ssh/id_rsa ]; then
     ssh-keygen -f ~/.ssh/id_rsa -t rsa -N '';
