@@ -28,8 +28,10 @@ source openrc.sh;
 export ZUUL_HOST='review.openstack.org';
 export WORKSPACE=$HOME/.quickstart;
 # to split changes: ^
-export ZUUL_CHANGES='openstack/mistral:master:refs/changes/62/490562/20';
-export OPT_ADDITIONAL_PARAMETERS=" --extra-vars @config/general_config/featureset007.yml";
+export ZUUL_CHANGES='openstack/mistral:master:refs/changes/61/513061/9';
+
+# Mistral in the overcloud
+#export OPT_ADDITIONAL_PARAMETERS=" --extra-vars @config/general_config/featureset007.yml";
 
 dt="$(date "+%Y-%m-%d_%H-%M_%s")";
 unbuffer bash ~/tripleo-quickstart/quickstart.sh --install-deps 2>&1 | tee -a logs/$dt.log;
