@@ -1,7 +1,7 @@
 FROM centos:centos7
 
 # Base system stuffs
-RUN yum install -y deltarpm sudo openssh iproute unbuffer; yum -y update; yum clean all
+RUN yum install -y deltarpm sudo openssh iproute expect-devel; yum -y update; yum clean all
 RUN yum -y install gcc zlib-devel bzip2 bzip2-devel readline-devel python-devel; yum clean all;
 
 # Home comforts
