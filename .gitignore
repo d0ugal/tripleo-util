@@ -10,5 +10,6 @@
 .novaclient
 .quickstart
 .ssh
+.viminfo
 openrc.sh
 tripleo-quickstart
