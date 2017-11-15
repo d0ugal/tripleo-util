@@ -18,16 +18,13 @@ fi
 sudo rm -rf /root/.ssh;
 sudo cp -r ~/.ssh/ /root/.ssh && sudo chown -R root /root/.ssh;
 
-# If you want to update quickstart, delete ~/tripleo-quickstart and it'll
-# re-clone and remove the old workdir.
+# If we don't have the quickstart dir, call the clean script which will clean
+# up previous versions and setup.
 if [ ! -d ~/tripleo-quickstart/ ]; then
-    git clone https://github.com/openstack/tripleo-quickstart.git ~/tripleo-quickstart;
-    rm -rf ~/.quickstart ;
-    unbuffer bash ~/tripleo-quickstart/quickstart.sh --install-deps 2>&1 | tee -a logs/$dt.install.log;
+    bash ~/clean.sh;
 fi
 
 source openrc.sh;
-
 export WORKSPACE=$HOME/.quickstart;
 
 #export ZUUL_HOST='review.openstack.org';
