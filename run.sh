@@ -27,13 +27,12 @@ fi
 source openrc.sh;
 export WORKSPACE=$HOME/.quickstart;
 
-#export ZUUL_HOST='review.openstack.org';
+export ZUUL_HOST='review.openstack.org';
 # to split changes: ^
-#export ZUUL_CHANGES='openstack/mistral:master:refs/changes/85/506185/21';
+export ZUUL_CHANGES='openstack/tripleo-common:master:refs/changes/62/526462/1';
 
 # Mistral in the overcloud
 export OPT_ADDITIONAL_PARAMETERS=" --extra-vars @config/general_config/featureset007.yml";
 
-# --no-gate when not testing changes.
-unbuffer bash ~/tripleo-quickstart/devmode.sh -d --ovb --no-gate 2>&1 | tee -a logs/$dt.run.log;
-#unbuffer bash ~/tripleo-quickstart/devmode.sh -d --ovb 2>&1 | tee -a logs/$dt.run.log;
+#unbuffer bash ~/tripleo-quickstart/devmode.sh -d --ovb --no-gate 2>&1 | tee -a logs/$dt.run.log;
+unbuffer bash ~/tripleo-quickstart/devmode.sh -d --ovb 2>&1 | tee -a logs/$dt.run.log;
