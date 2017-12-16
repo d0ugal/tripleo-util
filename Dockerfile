@@ -14,7 +14,8 @@ RUN git clone https://github.com/openstack/tripleo-quickstart.git ~/tripleo-quic
 
 # Python goodies
 RUN wget https://bootstrap.pypa.io/get-pip.py; sudo python get-pip.py;
-RUN sudo pip install -U pipsi setuptools pip virtualenv tox git-review python-openstackclient;
+RUN sudo pip install -U pipsi setuptools pip virtualenv tox git-review
+RUN sudo pip install -U python-openstackclient python-heatclient python-mistralclient;
 
 # heap user creation and keys
 RUN sudo useradd heap && \
