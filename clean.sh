@@ -28,7 +28,6 @@ dt="$(date "+%Y-%m-%d_%H-%M_%s")";
 source ~/openrc.sh;
 
 # Manually remove ports and old stacks.
-
 openstack port list --long;
 openstack port delete $(openstack port list  -c ID -f value --device-owner=network:dhcp) || true;
 openstack port list --long;
