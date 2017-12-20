@@ -18,21 +18,12 @@ fi
 sudo rm -rf /root/.ssh;
 sudo cp -r ~/.ssh/ /root/.ssh && sudo chown -R root /root/.ssh;
 
-# If we don't have the quickstart dir, call the clean script which will clean
-# up previous versions and setup.
-if [ ! -d ~/tripleo-quickstart/ ]; then
-    bash ~/clean.sh;
-fi
-
 source openrc.sh;
-export WORKSPACE=$HOME/.quickstart;
+bash ~/clean.sh;
 
-export ZUUL_HOST='review.openstack.org';
-# to split changes: ^
-export ZUUL_CHANGES='openstack/tripleo-common:master:refs/changes/62/526462/3';
+export WORKSPACE="$(mktemp -d -p ~/reproduce/ -t tmp.XXXXX)"
+export CREATE_VIRTUALENV=false
+export REMOVE_STACKS_KEYPAIRS=false
+export NODESTACK_PREFIX=""
 
-# Mistral in the overcloud
-#export OPT_ADDITIONAL_PARAMETERS=" --extra-vars @config/general_config/featureset007.yml";
-
-#unbuffer bash ~/tripleo-quickstart/devmode.sh -d --ovb --no-gate 2>&1 | tee -a logs/$dt.run.log;
-unbuffer bash ~/tripleo-quickstart/devmode.sh -d --ovb 2>&1 | tee -a logs/$dt.run.log;
+unbuffer bash ~/run-new.sh 2>&1 | tee -a logs/$dt.run.log;
