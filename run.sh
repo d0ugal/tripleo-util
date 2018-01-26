@@ -9,7 +9,9 @@ fi
 
 dt="$(date "+%Y-%m-%d_%H-%M_%s")";
 
-echo "Running quickstart"
+echo "Running quickstart";
+
+URL=$1;
 
 # We want the root user to have the same keys as us.
 if [ ! -f ~/.ssh/id_rsa ]; then
@@ -18,21 +20,16 @@ fi
 sudo rm -rf /root/.ssh;
 sudo cp -r ~/.ssh/ /root/.ssh && sudo chown -R root /root/.ssh;
 
-# If we don't have the quickstart dir, call the clean script which will clean
-# up previous versions and setup.
-if [ ! -d ~/tripleo-quickstart/ ]; then
-    bash ~/clean.sh;
-fi
+bash ~/clean.sh;
 
 source openrc.sh;
-export WORKSPACE=$HOME/.quickstart;
+WORKSPACE="$(mktemp -d -p ~/reproduce/ -t tmp.XXXXX)";
 
-export ZUUL_HOST='review.openstack.org';
-# to split changes: ^
-export ZUUL_CHANGES='openstack/tripleo-common:master:refs/changes/62/526462/3';
+rm -f reproducer-quickstart.sh;
+wget $URL;
 
-# Mistral in the overcloud
-#export OPT_ADDITIONAL_PARAMETERS=" --extra-vars @config/general_config/featureset007.yml";
-
-#unbuffer bash ~/tripleo-quickstart/devmode.sh -d --ovb --no-gate 2>&1 | tee -a logs/$dt.run.log;
-unbuffer bash ~/tripleo-quickstart/devmode.sh -d --ovb 2>&1 | tee -a logs/$dt.run.log;
+bash -x reproducer-quickstart.sh \
+  --workspace WORKSPACE \
+  --create-virtualenv true \
+  --remove-stack-keypairs true \
+  --nodestack-prefix repro;
