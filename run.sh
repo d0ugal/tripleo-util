@@ -21,8 +21,9 @@ WORKSPACE="$(mktemp -d -p ~/reproduce/ -t tmp.XXXXX)";
 rm -f reproducer-quickstart.sh;
 wget $URL;
 
-bash -x reproducer-quickstart.sh \
+unbuffer bash -x reproducer-quickstart.sh \
   --workspace $WORKSPACE \
   --create-virtualenv true \
   --remove-stacks-keypairs true \
-  --nodestack-prefix repro;
+  --nodestack-prefix reproi 2>&1 \
+  | tee -a logs/$dt.run.log;
