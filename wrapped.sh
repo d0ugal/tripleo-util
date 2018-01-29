@@ -16,14 +16,13 @@ URL=$1;
 bash ~/clean.sh;
 
 source openrc.sh;
-WORKSPACE="$(mktemp -d -p ~/reproduce/ -t tmp.XXXXX)";
+WORKSPACE="$(mktemp -d -p ~/reproduce/ -t "tmp.$dt.XXXXX")";
 
 rm -f reproducer-quickstart.sh;
 wget $URL;
 
-unbuffer bash -x reproducer-quickstart.sh \
+bash -x reproducer-quickstart.sh \
   --workspace $WORKSPACE \
   --create-virtualenv true \
   --remove-stacks-keypairs true \
-  --nodestack-prefix reproi 2>&1 \
-  | tee -a logs/$dt.run.log;
+  --nodestack-prefix repro;

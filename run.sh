@@ -7,4 +7,6 @@ if [ ! -f /.dockerenv ]; then
     exit 0;
 fi
 
-unbuffer bash -x wrapped.sh | tee -a logs/$dt.run.log;
+dt="$(date "+%Y-%m-%d_%H-%M_%s")";
+
+unbuffer bash -x wrapped.sh $1 | tee -a logs/$dt.run.log;
