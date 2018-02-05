@@ -26,4 +26,5 @@ bash -x reproducer-quickstart.sh \
   --workspace $WORKSPACE \
   --create-virtualenv true \
   --remove-stacks-keypairs true \
-  --nodestack-prefix repro;
+  --nodestack-prefix repro \
+  --autorun;
