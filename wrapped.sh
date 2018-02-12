@@ -28,3 +28,7 @@ bash -x reproducer-quickstart.sh \
   --remove-stacks-keypairs true \
   --nodestack-prefix repro \
   --autorun;
+
+export $(awk '/subnode-0/ {print $2}' reproduce/multinode_hosts);
+
+scp -r zuul@$ansible_host:scripts ~/scripts
