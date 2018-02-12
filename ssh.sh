@@ -2,4 +2,4 @@
 set -eux
 set -o pipefail
 
-ssh -F .quickstart/ssh.config.ansible undercloud -i .quickstart/id_rsa_undercloud
+export $(awk '/subnode-0/ {print $2}' reproduce/multinode_hosts); ssh zuul@$ansible_host
