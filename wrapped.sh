@@ -31,4 +31,5 @@ bash -x reproducer-quickstart.sh \
 
 export $(awk '/subnode-0/ {print $2}' reproduce/multinode_hosts);
 
-scp -r zuul@$ansible_host:scripts ~/scripts
+ssh-keygen -R $ansible_host
+scp -o StrictHostKeyChecking=no -r ~/scripts zuul@$ansible_host:scripts
