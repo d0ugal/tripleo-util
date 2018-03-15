@@ -29,7 +29,4 @@ bash -x reproducer-quickstart.sh \
   --nodestack-prefix repro \
   --autorun;
 
-export $(awk '/subnode-0/ {print $2}' reproduce/multinode_hosts);
-
-ssh-keygen -R $ansible_host
-scp -o StrictHostKeyChecking=no -r ~/scripts zuul@$ansible_host:scripts
+~/copy-scripts.sh
