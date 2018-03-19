@@ -2,27 +2,32 @@
 # -*- coding: utf-8 -*-
 
 """
-Utility for showing a full Mistral Workflow Execution
+Generate a report for a Mistral workflow execution
 
-NOTE: We assume you have set the following environment variables;
-      OS_AUTH_URL, OS_USERNAME, OS_PASSWORD and OS_PROJECT_NAME
-
-Simplest usage...
+The very simplest usage...
 
     $ wf-report
 
-The latest Workflow execution will be found and a report will be generated. If
-you'd rather specify the execution ID, you can do that too...
+The latest Workflow execution will be found and a report will be generated. It
+will show the workflow execution, it's tasks, action executions and
+sub-workflows in a rough tree format.
+
+If you'd rather specify the execution ID, you can do that too...
 
     $ wf-report WORKFLOW_EXECUTION_UUID
 
-Will display a workflow execution, it's tasks, action executions and
-sub-workflows in a rough tree format.
+You can filter by state...
 
     $ wf-report WORKFLOW_EXECUTION_UUID --state=ERROR
 
-Will display the same tree, but only show nodes with at least one descendant
-in the ERROR state. The state can be changed to any valid Mistral state.
+This will display the same tree, but only show nodes with at least one
+descendant in the ERROR state. The state can be changed to any valid Mistral
+state.
+
+There are a few other options. -h will show them. They may be useful.
+
+NOTE: We assume you have set the following environment variables;
+      OS_AUTH_URL, OS_USERNAME, OS_PASSWORD and OS_PROJECT_NAME
 """
 
 from __future__ import print_function
