@@ -1,6 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""
+Utility for showing a full Mistral Workflow Execution
+
+$ wf-report WORKFLOW_EXECUTION_UUID
+
+Will display a workflow execution, it's tasks, action executions and
+sub-workflows in a rough tree format.
+
+$ wf-report WORKFLOW_EXECUTION_UUID --state=ERROR
+
+Will display the same tree, but only show nodes with at least one descendant
+in the ERROR state. The state can be changed to any valid Mistral state.
+"""
+
 from __future__ import print_function
 
 import argparse
