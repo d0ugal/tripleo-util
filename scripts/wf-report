@@ -30,14 +30,17 @@ def _get_session():
     auth_plugin = ks_auth.Password(**auth_kwargs)
     return session.Session(auth=auth_plugin)
 
+
 def _client():
     sess = _get_session()
-    mistral_url = "http://192.168.24.1:8989/v2" # TODO: get automatically
+    mistral_url = "http://192.168.24.1:8989/v2"  # TODO: get automatically
     return mistralclient.client(mistral_url=mistral_url, session=sess)
+
 
 def _add_descendant_state(descendants, parents, state):
     for parent in parents:
         descendants[parent.id].add(state)
+
 
 def _iter_execution(mistral, execution, sub_wf_tasks, parents, descendants):
     tasks = mistral.tasks.list(execution.id)
@@ -47,24 +50,28 @@ def _iter_execution(mistral, execution, sub_wf_tasks, parents, descendants):
     for task in tasks:
         yield task.state, parents, task
         _add_descendant_state(descendants, parents, task.state)
-        #for action_ex in mistral.action_executions.list(task.id):
-        #    yield action_ex.state, parents + (action_ex, ), action_ex
+        for action_ex in mistral.action_executions.list(task.id):
+            yield action_ex.state, parents + (action_ex, ), action_ex
         if task.id in sub_wf_tasks:
             sub_wf_ex = sub_wf_tasks[task.id]
             p = parents + (task, )
-            for sub_task_state, ps, sub_task in _iter_execution(mistral, sub_wf_ex, sub_wf_tasks, p, descendants):
+            for sub_task_state, ps, sub_task in _iter_execution(
+                    mistral, sub_wf_ex, sub_wf_tasks, p, descendants):
                 yield sub_task_state, ps, sub_task
+
 
 def _format_node(indent, node):
     line = '{0: <8} {1: <9} {2} {3}   (ID: {4})'
     if isinstance(node, executions.Execution):
-        return line.format(node.state, 'Execution', indent, node.workflow_name, node.id)
+        return line.format(node.state, 'Execution', indent, node.workflow_name,
+                           node.id)
     if isinstance(node, tasks.Task):
         return line.format(node.state, 'Task', indent, node.name, node.id)
     if isinstance(node, action_executions.ActionExecution):
         return line.format(node.state, 'Action Ex', indent, node.name, node.id)
 
     return node
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -89,8 +96,10 @@ def main():
         tasks.extend(mistral.tasks.list(sub_workflow.id))
 
     descendants = collections.defaultdict(set)
-    for state, parents, node in list(_iter_execution(mistral, execution, sub_wf_tasks, (), descendants)):
-        if args.state and (args.state != state and args.state not in descendants[node.id]):
+    iter_ = _iter_execution(mistral, execution, sub_wf_tasks, (), descendants)
+    for state, parents, node in list(iter_):
+        if args.state and (args.state != state and
+                           args.state not in descendants[node.id]):
             continue
         indent = "    " * len(parents)
         print(_format_node(indent, node))
