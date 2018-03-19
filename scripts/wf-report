@@ -50,10 +50,10 @@ from keystoneauth1 import session
 def _get_session():
 
     auth_kwargs = {
-        'auth_url': os.environ.get('OS_AUTH_URL'),
-        'username': os.environ.get('OS_USERNAME'),
-        'password': os.environ.get('OS_PASSWORD'),
-        'project_name': os.environ.get('OS_PROJECT_NAME'),
+        'auth_url': os.environ['OS_AUTH_URL'],
+        'username': os.environ['OS_USERNAME'],
+        'password': os.environ['OS_PASSWORD'],
+        'project_name': os.environ['OS_PROJECT_NAME'],
         'project_domain_name': 'Default',
         'user_domain_name': 'Default',
     }
@@ -76,7 +76,8 @@ def _add_descendant_state(descendants, parents, node):
 
 
 def _iter_execution(mistral, execution, sub_wf_tasks, parents, descendants):
-    tasks = mistral.tasks.list(execution.id)
+    tasks = mistral.tasks.list(execution.id, sort_keys="created_at",
+                               sort_dirs="asc")
     yield execution.state, parents, execution
     _add_descendant_state(descendants, parents, execution)
     parents = parents + (execution, )
@@ -92,24 +93,28 @@ def _iter_execution(mistral, execution, sub_wf_tasks, parents, descendants):
             for _ in _iter_execution(
                     mistral, sub_wf_ex, sub_wf_tasks, p, descendants):
                 yield _
+    yield execution.state, parents, execution
 
 
 def _format_node(indent, node, args):
-    line = '{0: <8} {1: <9} {2} {3}  (ID: {4})'
+    line = '{0} {1: <8} {2: <9} {3} {4}  (ID: {5})'
     if args.workflow_executions and isinstance(node, executions.Execution):
-        return line.format(node.state, 'Execution', indent, node.workflow_name,
-                           node.id)
+        return line.format(node.created_at, node.state, 'Execution', indent,
+                           node.workflow_name, node.id)
     if args.task_executions and isinstance(node, tasks.Task):
-        return line.format(node.state, 'Task', indent, node.name, node.id)
+        return line.format(node.created_at, node.state, 'Task', indent,
+                           node.name, node.id)
     if args.action_executions and isinstance(
             node, action_executions.ActionExecution):
-        return line.format(node.state, 'Action Ex', indent, node.name, node.id)
+        return line.format(node.created_at, node.state, 'Action Ex', indent,
+                           node.name, node.id)
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('execution_id', nargs="?")
     parser.add_argument('--state')
+    parser.add_argument('--not-state')
 
     parser.add_argument('-W', '--no-workflow-executions',
                         dest='workflow_executions', action='store_false')
@@ -137,16 +142,27 @@ def main():
 
     if not ex_id:
         ex_id = mistral.executions.list(
-            limit=1, sort_keys="updated_at", sort_dirs="desc")[0].id
+            limit=1, sort_keys="created_at", sort_dirs="desc")[0].id
 
     execution = mistral.executions.get(ex_id)
-    sub_workflows = mistral.executions.list(root_execution_id=ex_id)
+    sub_workflows = mistral.executions.list(
+        root_execution_id=ex_id, sort_keys="created_at", sort_dirs="asc")
     sub_wf_tasks = {sw.task_execution_id: sw for sw in sub_workflows}
 
     descendants = collections.defaultdict(set)
     iter_ = _iter_execution(mistral, execution, sub_wf_tasks, (), descendants)
+    seen = set()
     for state, parents, node in list(iter_):
         if args.state and args.state not in descendants[node.id]:
+            continue
+        if args.not_state and node.state == args.not_state:
+            continue
+        if node.id in seen and args.include_output:
+            indent = "    " * len(parents)
+            output = mistral.executions.get(node.id).output
+            result = json.loads(output)
+            result = json.dumps(result, indent=4, sort_keys=True)
+            print(indent + result.replace('\n', '\n' + indent))
             continue
         indent = "    " * len(parents)
         line = _format_node(indent, node, args)
@@ -159,6 +175,7 @@ def main():
                 result = json.loads(output)['result']
                 result = json.dumps(result, indent=4, sort_keys=True)
                 print(indent + result.replace('\n', '\n' + indent))
+        seen.add(node.id)
 
 
 if __name__ == "__main__":
