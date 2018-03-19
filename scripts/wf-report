@@ -4,12 +4,17 @@
 """
 Utility for showing a full Mistral Workflow Execution
 
-$ wf-report WORKFLOW_EXECUTION_UUID
+NOTE: We assume you have set the following environment variables;
+      OS_AUTH_URL, OS_USERNAME, OS_PASSWORD and OS_PROJECT_NAME
+
+Simplest usage...
+
+    $ wf-report WORKFLOW_EXECUTION_UUID
 
 Will display a workflow execution, it's tasks, action executions and
 sub-workflows in a rough tree format.
 
-$ wf-report WORKFLOW_EXECUTION_UUID --state=ERROR
+    $ wf-report WORKFLOW_EXECUTION_UUID --state=ERROR
 
 Will display the same tree, but only show nodes with at least one descendant
 in the ERROR state. The state can be changed to any valid Mistral state.
@@ -51,19 +56,22 @@ def _client():
     return mistralclient.client(mistral_url=mistral_url, session=sess)
 
 
-def _add_descendant_state(descendants, parents, state):
+def _add_descendant_state(descendants, parents, node):
+    state = node.state
     for parent in parents:
         descendants[parent.id].add(state)
+    # Add outselves, for easier looking up later
+    descendants[node.id].add(state)
 
 
 def _iter_execution(mistral, execution, sub_wf_tasks, parents, descendants):
     tasks = mistral.tasks.list(execution.id)
     yield execution.state, parents, execution
-    _add_descendant_state(descendants, parents, execution.state)
+    _add_descendant_state(descendants, parents, execution)
     parents = parents + (execution, )
     for task in tasks:
         yield task.state, parents, task
-        _add_descendant_state(descendants, parents, task.state)
+        _add_descendant_state(descendants, parents, task)
         for action_ex in mistral.action_executions.list(task.id):
             yield action_ex.state, parents + (action_ex, ), action_ex
         if task.id in sub_wf_tasks:
@@ -74,23 +82,37 @@ def _iter_execution(mistral, execution, sub_wf_tasks, parents, descendants):
                 yield sub_task_state, ps, sub_task
 
 
-def _format_node(indent, node):
+def _format_node(indent, node, args):
     line = '{0: <8} {1: <9} {2} {3}   (ID: {4})'
-    if isinstance(node, executions.Execution):
+    if args.workflow_executions and isinstance(node, executions.Execution):
         return line.format(node.state, 'Execution', indent, node.workflow_name,
                            node.id)
-    if isinstance(node, tasks.Task):
+    if args.task_executions and isinstance(node, tasks.Task):
         return line.format(node.state, 'Task', indent, node.name, node.id)
-    if isinstance(node, action_executions.ActionExecution):
+    if args.action_executions and isinstance(
+            node, action_executions.ActionExecution):
         return line.format(node.state, 'Action Ex', indent, node.name, node.id)
-
-    return node
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('execution_id')
     parser.add_argument('--state')
+
+    parser.add_argument('-W', '--no-workflow-executions',
+                        dest='workflow_executions', action='store_false')
+    parser.set_defaults(workflow_executions=True)
+
+    parser.add_argument('-T', '--no-task-executions', dest='task_executions',
+                        action='store_false')
+    parser.set_defaults(task_executions=True)
+
+    parser.add_argument('-A', '--no-action-executions',
+                        dest='action_executions', action='store_false')
+    parser.set_defaults(action_executions=True)
+
+    parser.add_argument('-i', '--include-output', action='store_true')
+
     return parser.parse_args()
 
 
@@ -112,11 +134,16 @@ def main():
     descendants = collections.defaultdict(set)
     iter_ = _iter_execution(mistral, execution, sub_wf_tasks, (), descendants)
     for state, parents, node in list(iter_):
-        if args.state and (args.state != state and
-                           args.state not in descendants[node.id]):
+        if args.state and args.state not in descendants[node.id]:
             continue
         indent = "    " * len(parents)
-        print(_format_node(indent, node))
+        line = _format_node(indent, node, args)
+        if line:
+            print(line)
+            if args.include_output and isinstance(
+                    node, action_executions.ActionExecution):
+                indent = "    " * (len(parents) + 1)
+                print(indent, mistral.action_executions.get(node.id).output)
 
 
 if __name__ == "__main__":
