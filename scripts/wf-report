@@ -85,7 +85,7 @@ def _iter_execution(mistral, execution, sub_wf_tasks, parents, descendants):
 
 
 def _format_node(indent, node, args):
-    line = '{0: <8} {1: <9} {2} {3}   (ID: {4})'
+    line = '{0: <8} {1: <9} {2} {3}  (ID: {4})'
     if args.workflow_executions and isinstance(node, executions.Execution):
         return line.format(node.state, 'Execution', indent, node.workflow_name,
                            node.id)
@@ -98,7 +98,7 @@ def _format_node(indent, node, args):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('execution_id')
+    parser.add_argument('execution_id', nargs="?")
     parser.add_argument('--state')
 
     parser.add_argument('-W', '--no-workflow-executions',
@@ -124,6 +124,10 @@ def main():
     ex_id = args.execution_id
 
     mistral = _client()
+
+    if not ex_id:
+        ex_id = mistral.executions.list(
+            limit=1, sort_keys="updated_at", sort_dirs="desc")[0].id
 
     execution = mistral.executions.get(ex_id)
     sub_workflows = mistral.executions.list(root_execution_id=ex_id)
