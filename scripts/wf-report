@@ -24,6 +24,7 @@ from __future__ import print_function
 
 import argparse
 import collections
+import json
 import os
 import time
 
@@ -73,13 +74,14 @@ def _iter_execution(mistral, execution, sub_wf_tasks, parents, descendants):
         yield task.state, parents, task
         _add_descendant_state(descendants, parents, task)
         for action_ex in mistral.action_executions.list(task.id):
-            yield action_ex.state, parents + (action_ex, ), action_ex
+            yield action_ex.state, parents + (task, ), action_ex
+            _add_descendant_state(descendants, parents + (task, ), action_ex)
         if task.id in sub_wf_tasks:
             sub_wf_ex = sub_wf_tasks[task.id]
             p = parents + (task, )
-            for sub_task_state, ps, sub_task in _iter_execution(
+            for _ in _iter_execution(
                     mistral, sub_wf_ex, sub_wf_tasks, p, descendants):
-                yield sub_task_state, ps, sub_task
+                yield _
 
 
 def _format_node(indent, node, args):
@@ -143,7 +145,9 @@ def main():
             if args.include_output and isinstance(
                     node, action_executions.ActionExecution):
                 indent = "    " * (len(parents) + 1)
-                print(indent, mistral.action_executions.get(node.id).output)
+                output = mistral.action_executions.get(node.id).output
+                result = json.loads(output)['result']
+                print(indent + result.replace('\n', '\n' + indent))
 
 
 if __name__ == "__main__":
