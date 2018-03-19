@@ -142,10 +142,6 @@ def main():
     execution = mistral.executions.get(ex_id)
     sub_workflows = mistral.executions.list(root_execution_id=ex_id)
     sub_wf_tasks = {sw.task_execution_id: sw for sw in sub_workflows}
-    tasks = list(mistral.tasks.list(ex_id))
-
-    for sub_workflow in sub_workflows:
-        tasks.extend(mistral.tasks.list(sub_workflow.id))
 
     descendants = collections.defaultdict(set)
     iter_ = _iter_execution(mistral, execution, sub_wf_tasks, (), descendants)
