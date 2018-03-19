@@ -9,6 +9,11 @@ NOTE: We assume you have set the following environment variables;
 
 Simplest usage...
 
+    $ wf-report
+
+The latest Workflow execution will be found and a report will be generated. If
+you'd rather specify the execution ID, you can do that too...
+
     $ wf-report WORKFLOW_EXECUTION_UUID
 
 Will display a workflow execution, it's tasks, action executions and
@@ -151,6 +156,7 @@ def main():
                 indent = "    " * (len(parents) + 1)
                 output = mistral.action_executions.get(node.id).output
                 result = json.loads(output)['result']
+                result = json.dumps(result, indent=4, sort_keys=True)
                 print(indent + result.replace('\n', '\n' + indent))
 
 
