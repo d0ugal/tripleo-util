@@ -28,5 +28,3 @@ bash -x reproducer-quickstart.sh \
   --remove-stacks-keypairs true \
   --nodestack-prefix repro \
   --autorun;
-
-~/copy-scripts.sh

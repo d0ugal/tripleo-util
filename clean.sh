@@ -9,7 +9,7 @@ fi
 
 sudo yum -y update;
 
-rm -f ~/.ssh/known_hosts;
+rm -f ~/.ssh/known_hosts*;
 
 source ~/openrc.sh;
 
