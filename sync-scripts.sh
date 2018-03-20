@@ -7,7 +7,11 @@ if [ ! -f /.dockerenv ]; then
     exit 0;
 fi
 
-export $(awk '/subnode-0/ {print $2}' reproduce/multinode_hosts) || export $(awk '/subnode-0/ {print $2}' reproduce/ovb_hosts);
+if [ -f reproduce/multinode_hosts ]; then
+    export $(awk '/subnode-0/ {print $2}' reproduce/multinode_hosts);
+else
+    export $(awk '/subnode-0/ {print $2}' reproduce/ovb_hosts);
+fi;
 
 ssh-keygen -R $ansible_host
 rsync -arvce "ssh -o StrictHostKeyChecking=no" -r ~/scripts zuul@$ansible_host:~/
