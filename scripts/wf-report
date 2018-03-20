@@ -88,12 +88,12 @@ def _iter_execution(mistral, execution, sub_wf_tasks, parents, descendants):
             yield action_ex.state, parents + (task, ), action_ex
             _add_descendant_state(descendants, parents + (task, ), action_ex)
         if task.id in sub_wf_tasks:
-            sub_wf_ex = sub_wf_tasks[task.id]
-            p = parents + (task, )
-            for _ in _iter_execution(
-                    mistral, sub_wf_ex, sub_wf_tasks, p, descendants):
-                yield _
-    yield execution.state, parents, execution
+            sub_wf_exs = sub_wf_tasks[task.id]
+            for sub_wf_ex in sub_wf_exs:
+                p = parents + (task, )
+                for _ in _iter_execution(
+                        mistral, sub_wf_ex, sub_wf_tasks, p, descendants):
+                    yield _
 
 
 def _format_node(indent, node, args):
@@ -147,7 +147,9 @@ def main():
     execution = mistral.executions.get(ex_id)
     sub_workflows = mistral.executions.list(
         root_execution_id=ex_id, sort_keys="created_at", sort_dirs="asc")
-    sub_wf_tasks = {sw.task_execution_id: sw for sw in sub_workflows}
+    sub_wf_tasks = collections.defaultdict(list)
+    for sw in sub_workflows:
+        sub_wf_tasks[sw.task_execution_id].append(sw)
 
     descendants = collections.defaultdict(set)
     iter_ = _iter_execution(mistral, execution, sub_wf_tasks, (), descendants)
