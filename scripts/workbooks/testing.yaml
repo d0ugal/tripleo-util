@@ -1,0 +1,24 @@
+---
+version: '2.0'
+name: testing
+description: Testing Workflows
+
+workflows:
+
+  zaqar_long_workflow:
+    description: >-
+      In bug https://bugs.launchpad.net/tripleo/+bug/1761050 it was suggested
+      that Zaqar stops working after the Keystone token expires (1 hour). This
+      workflow runs for 2 hours, sending workflows every 5 mins.
+    tasks:
+      send_message:
+        action: zaqar.queue_post
+        retry:
+          delay: 300
+          count: 25
+          continue-on: <% true %>
+        input:
+          queue_name: tripleo
+          messages:
+            body:
+              status: SUCCESS
