@@ -9,17 +9,9 @@ fi
 
 sudo yum -y update;
 
-rm -f ~/.ssh/known_hosts*;
-
 source ~/openrc.sh;
 
-# Manually remove old things.
-openstack port delete $(openstack port list  -c ID -f value --device-owner=network:dhcp) || true;
 openstack stack delete -y --wait $(openstack stack list -c ID -f value) || true;
-openstack keypair delete $(openstack keypair list -c Name -f value) || true;
-
-# List them in the output, just so I can verify
-openstack port list --long;
 openstack stack list;
 
 # We want the root user to have the same keys as us. I forget why.

@@ -7,7 +7,7 @@ if [ ! -f /.dockerenv ]; then
     exit 0;
 fi
 
-dt="$(date "+%Y-%m-%d_%H-%M_%s")";
+dt="$(date "+%Y-%m-%d_%H-%M_%S")";
 
 echo "Running quickstart";
 
@@ -21,6 +21,7 @@ WORKSPACE=~/reproduce/
 
 rm -f reproducer-quickstart.sh;
 wget $URL;
+cp reproducer-quickstart.sh logs/$dt.sh;
 
 bash -x reproducer-quickstart.sh \
   --workspace $WORKSPACE \
