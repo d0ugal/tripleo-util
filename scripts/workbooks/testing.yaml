@@ -10,15 +10,22 @@ workflows:
       In bug https://bugs.launchpad.net/tripleo/+bug/1761050 it was suggested
       that Zaqar stops working after the Keystone token expires (1 hour). This
       workflow runs for 2 hours, sending workflows every 5 mins.
+      (I had to change this to run for 5 hours, seems token expiry is 4 hours
+      on my env.)
+      After starting the workflow I watch these in tmux splits ...
+        $ watch ~/scripts/wf-report
+      and ...
+        $ watch openstack messaging message list tripleo --client-id=de305d54-75b4-431b-adb2-eb6b9e546014
     tasks:
       send_message:
         action: zaqar.queue_post
         retry:
           delay: 300
-          count: 25
+          count: 60
           continue-on: <% true %>
         input:
           queue_name: tripleo
           messages:
             body:
               status: SUCCESS
+            ttl: 360
