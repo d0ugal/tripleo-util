@@ -8,9 +8,10 @@ create="openstack workflow execution create -c ID -f value";
 show="openstack workflow execution show";
 state="$show -c State -f value"
 wf="tripleo.messaging.v1.send"
-swift delete overcloud-messages || true;
 
-run_and_wait(){
+_run_and_wait(){
+
+
     ex_id=$($create $wf "$2" -d "$1");
     ex_state=$($state $ex_id);
     while [ "$ex_state" != "SUCCESS"  ] && [ "$ex_state" != "ERROR"  ]; do
@@ -24,12 +25,17 @@ run_and_wait(){
     fi
 }
 
-run_and_wait \
-  "Plan name and status. No container" \
-  '{"type": "test", "queue_name": "tripleo", "plan_name": "overcloud", "execution": {"id": "UUID"}, "plan_status": "statusseses"}';
+run_and_wait(){
+    # Delete the container
+    swift delete overcloud-messages || true;
+    # Run once without
+    _run_and_wait "$1 (No container)" "$2";
+    # and once with
+    _run_and_wait "$1 (With container)" "$2";
+}
 
 run_and_wait \
-  "Plan name and status. container exists" \
+  "Plan name and status." \
   '{"type": "test", "queue_name": "tripleo", "plan_name": "overcloud", "execution": {"id": "UUID"}, "plan_status": "statusseses"}';
 
 run_and_wait \
