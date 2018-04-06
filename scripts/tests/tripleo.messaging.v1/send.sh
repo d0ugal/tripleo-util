@@ -11,7 +11,6 @@ wf="tripleo.messaging.v1.send"
 
 _run_and_wait(){
 
-
     ex_id=$($create $wf "$2" -d "$1");
     ex_state=$($state $ex_id);
     while [ "$ex_state" != "SUCCESS"  ] && [ "$ex_state" != "ERROR"  ]; do
@@ -19,19 +18,21 @@ _run_and_wait(){
     done
     ~/scripts/wf-report $ex_id;
     $show $ex_id;
-    if [ "$ex_state" != "SUCCESS" ]; then
+    swift list overcloud-messages || true;
+    if [ "$ex_state" != "$3" ]; then
       echo "Execution failed";
       exit 42;
     fi
 }
 
 run_and_wait(){
+    expected=${3:-SUCCESS};
     # Delete the container
     swift delete overcloud-messages || true;
     # Run once without
-    _run_and_wait "$1 (No container)" "$2";
+    _run_and_wait "$1 (No container)" "$2" $expected;
     # and once with
-    _run_and_wait "$1 (With container)" "$2";
+    _run_and_wait "$1 (With container)" "$2" $expected;
 }
 
 run_and_wait \
@@ -52,4 +53,5 @@ run_and_wait \
 
 run_and_wait \
   "failure message" \
-  '{"type": "test", "queue_name": "state": "FAILURE", "tripleo", "execution": {"id": "UUID"}, "plan_status": "status"}';
+  '{"type": "test", "queue_name": "tripleo", "status": "FAILED", "execution": {"id": "UUID"}, "plan_status": "status"}' \
+  "ERROR";
