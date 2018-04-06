@@ -49,3 +49,7 @@ run_and_wait \
 run_and_wait \
   "Plan status but no plan name" \
   '{"type": "test", "queue_name": "tripleo", "execution": {"id": "UUID"}, "plan_status": "status"}';
+
+run_and_wait \
+  "failure message" \
+  '{"type": "test", "queue_name": "state": "FAILURE", "tripleo", "execution": {"id": "UUID"}, "plan_status": "status"}';
