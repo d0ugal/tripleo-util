@@ -29,3 +29,54 @@ workflows:
             body:
               status: SUCCESS
             ttl: 360
+
+  invalid_jinja:
+    description: Shows that jobs cannot finish if following job has bad template
+
+    tasks:
+      http:
+        action: std.http url='http://google.com'
+        on-success:
+          - follow_on
+      follow_on:
+        action: std.javascript
+        input:
+          script: |
+            {{ nonexistent_variable }}
+
+  join_retry:
+    description: Shows that jobs with join all execute when they should fail
+
+    type: direct
+
+    output:
+      ok: <% $.ok %>
+
+    tasks:
+      failure:
+        action: std.javascript
+        input:
+          script: |
+            throw "failed immediately"
+        on-success:
+          - joined_retry
+      succeed:
+        action: std.javascript
+        input:
+          script: |
+            var start = new Date().getTime()
+            while(new Date().getTime() < start + 10000) { }
+        on-success:
+          - joined_retry
+      joined_retry:
+        retry:
+          count: 3
+          delay: 2
+        join: all
+        action: std.javascript
+        input:
+          script: |
+            return 'ok'
+        publish:
+          ok: <% task(joined_retry).result %>
+
