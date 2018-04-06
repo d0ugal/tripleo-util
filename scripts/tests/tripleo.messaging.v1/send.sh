@@ -38,5 +38,5 @@ ex_id=$($create $wf "$json" -d "No plan or status");
 wait_for_execution $ex_id;
 
 json='{"type": "test", "queue_name": "tripleo", "execution": {"id": "UUID"}, "plan_status": "status"}';
-ex_id=$($create $wf "$json" -d "Plan status but no plan name);
+ex_id=$($create $wf "$json" -d "Plan status but no plan name");
 wait_for_execution $ex_id;
