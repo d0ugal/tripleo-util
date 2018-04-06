@@ -141,8 +141,12 @@ def main():
     mistral = _client()
 
     if not ex_id:
-        ex_id = mistral.executions.list(
-            limit=1, sort_keys="created_at", sort_dirs="desc")[0].id
+        try:
+            ex_id = mistral.executions.list(
+                limit=1, sort_keys="created_at", sort_dirs="desc")[0].id
+        except IndexError:
+            print("No Workflow executions found in the Mistral API")
+            return
 
     execution = mistral.executions.get(ex_id)
     sub_workflows = mistral.executions.list(
