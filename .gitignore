@@ -17,7 +17,7 @@
 .viminfo
 openrc.sh
 openrcv3.sh
-reproduce
+build
 reproducer-quickstart.sh
 src
 tripleo-quickstart

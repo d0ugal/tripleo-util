@@ -7,10 +7,10 @@ if [ ! -f /.dockerenv ]; then
     exit 0;
 fi
 
-if [ -f reproduce/multinode_hosts ]; then
-    export $(awk '/subnode-0/ {print $2}' reproduce/multinode_hosts);
+if [ -f build/multinode_hosts ]; then
+    export $(awk '/subnode-0/ {print $2}' build/multinode_hosts);
 else
-    export $(awk '/subnode-0/ {print $2}' reproduce/ovb_hosts);
+    export $(awk '/subnode-0/ {print $2}' build/ovb_hosts);
 fi;
 
 ssh-keygen -R $ansible_host

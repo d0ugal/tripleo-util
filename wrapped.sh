@@ -16,8 +16,8 @@ URL=$1;
 bash ~/clean.sh;
 
 source openrc.sh;
-rm -rf ~/reproduce/ && mkdir ~/reproduce;
-WORKSPACE=~/reproduce/
+rm -rf ~/build/ && mkdir ~/build;
+WORKSPACE=~/build/
 
 rm -f reproducer-quickstart.sh;
 wget $URL;
