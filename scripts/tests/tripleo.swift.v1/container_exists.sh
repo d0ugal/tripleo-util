@@ -19,15 +19,23 @@ run_and_wait(){
     done
     ~/scripts/wf-report $ex_id;
     $show $ex_id;
+    swift list;
     if [ "$ex_state" != "$expected" ]; then
       echo "Execution failed";
       exit 42;
     fi
 }
 
-swift delete test_container || true;
+swift delete test-container || true;
 
-run_and_wait "No container, No create" '{"name":"test_container"}' 'ERROR';
-run_and_wait "No container, Yes create" '{"name":"test_container", "create_container":true}';
-run_and_wait "Yes container, No create" '{"name":"test_container"}';
-run_and_wait "Yes container, Yes create" '{"name":"test_container", "create_container":true}';
+run_and_wait "No container, No create" '{"container":"test-container"}' 'ERROR';
+run_and_wait "No container, Yes create" '{"container":"test-container", "create_container":true}';
+run_and_wait "Yes container, No create" '{"container":"test-container"}';
+run_and_wait "Yes container, Yes create" '{"container":"test-container", "create_container":true}';
+
+swift delete test-container || true;
+
+run_and_wait "No container, Custom create" '{"container":"test-container", "create_container":true, "create_action": "tripleo.plan.create_container"}';
+
+swift delete test-container || true;
+run_and_wait "No container, Custom headers" '{"container":"test-container", "create_container":true, "headers": {"x-container-meta-usage-tripleo": "support"}}';

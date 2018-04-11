@@ -1,0 +1,14 @@
+---
+version: '2.0'
+name: testing
+description: Testing Workflows
+
+workflows:
+
+  multiline_yaql:
+    tasks:
+      noop_task:
+        publish:
+          test: <%
+              "testing"
+            %>
