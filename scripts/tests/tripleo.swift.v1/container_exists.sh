@@ -7,9 +7,9 @@ set -o pipefail
 create="openstack workflow execution create -c ID -f value";
 show="openstack workflow execution show";
 state="$show -c State -f value"
-wf="tripleo.messaging.v1.container_exists"
+wf="tripleo.swift.v1.container_exists"
 
-_run_and_wait(){
+run_and_wait(){
     expected=${3:-SUCCESS};
 
     ex_id=$($create $wf "$2" -d "$1");
@@ -27,7 +27,7 @@ _run_and_wait(){
 
 swift delete test_container || true;
 
-run_and_wait "No container, No create" '{"name":"test_container"}';
+run_and_wait "No container, No create" '{"name":"test_container"}' 'ERROR';
 run_and_wait "No container, Yes create" '{"name":"test_container", "create_container":true}';
 run_and_wait "Yes container, No create" '{"name":"test_container"}';
 run_and_wait "Yes container, Yes create" '{"name":"test_container", "create_container":true}';
