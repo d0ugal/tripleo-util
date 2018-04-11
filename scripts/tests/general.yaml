@@ -60,7 +60,7 @@ workflows:
             throw "failed immediately"
         on-success:
           - joined_retry
-      succeed:
+      succeed_:
         action: std.javascript
         input:
           script: |
@@ -80,3 +80,16 @@ workflows:
         publish:
           ok: <% task(joined_retry).result %>
 
+  pass_and_fail:
+    tasks:
+      noop_task:
+        on-success:
+          - succeed: <% true %>
+          - fail
+
+  fail_and_pass:
+    tasks:
+      noop_task:
+        on-success:
+          - fail
+          - succeed: <% true %>
