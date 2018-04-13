@@ -9,4 +9,4 @@ fi
 
 dt="$(date "+%Y-%m-%d_%H-%M_%S")";
 
-unbuffer bash -x wrapped.sh $1 2>&1 | awk '{ print strftime(), $0; fflush() }' | tee -a logs/$dt.run.log;
+unbuffer bash -x wrapped.sh $1 $2 2>&1 | awk '{ print strftime(), $0; fflush() }' | tee -a logs/$1-$dt.run.log;

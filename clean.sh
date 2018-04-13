@@ -9,11 +9,6 @@ fi
 
 sudo yum -y update;
 
-source ~/openrc.sh;
-
-openstack stack delete -y --wait $(openstack stack list -c ID -f value) || true;
-openstack stack list;
-
 # We want the root user to have the same keys as us. I forget why.
 if [ ! -f ~/.ssh/id_rsa ]; then
     ssh-keygen -f ~/.ssh/id_rsa -t rsa -N '';

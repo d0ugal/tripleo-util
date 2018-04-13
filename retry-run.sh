@@ -9,5 +9,6 @@ fi
 
 while true
 do
-  bash run.sh $1 && break
+  bash run.sh $1 $2 && break
+  sleep 10;
 done
