@@ -39,6 +39,5 @@ cp $WORKSPACE/$PREFIX-reproducer-quickstart.sh logs/$PREFIX-$dt.sh;
 bash -x $WORKSPACE/$PREFIX-reproducer-quickstart.sh \
   --workspace $WORKSPACE \
   --create-virtualenv true \
-  --remove-stacks-keypairs true \
   --nodestack-prefix repro_${PREFIX}_ \
   --autorun;
