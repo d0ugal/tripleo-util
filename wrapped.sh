@@ -11,33 +11,21 @@ dt="$(date "+%Y-%m-%d_%H-%M_%S")";
 
 echo "Running quickstart";
 
-if [ $# -lt 2 ]; then
-  echo 1>&2 "$0: not enough arguments"
-  exit 42
-elif [ $# -gt 2 ]; then
-  echo 1>&2 "$0: too many arguments"
-  exit 42
-fi
+URL=$1;
+WORKSPACE=~/build
 
-PREFIX=$1
-
-echo -e '\033k'Reproducer $PREFIX'\033\\'
-
-URL=$2;
-WORKSPACE=~/build/$PREFIX
-
-bash ~/clean.sh $PREFIX;
+bash ~/clean-all.sh;
 
 source openrc.sh;
 rm -rf $WORKSPACE && mkdir -p $WORKSPACE;
 
-rm -f $PREFIX-reproducer-quickstart.sh;
-wget $URL -O $WORKSPACE/$PREFIX-reproducer-quickstart.sh;
-cp $WORKSPACE/$PREFIX-reproducer-quickstart.sh logs/$PREFIX-$dt.sh;
+rm -f $WORKSPACE/reproducer-quickstart.sh
+wget $URL -O $WORKSPACE/reproducer-quickstart.sh;
+cp $WORKSPACE/reproducer-quickstart.sh logs/$dt.sh;
 
 
-bash -x $WORKSPACE/$PREFIX-reproducer-quickstart.sh \
+bash -x $WORKSPACE/reproducer-quickstart.sh \
   --workspace $WORKSPACE \
   --create-virtualenv true \
-  --nodestack-prefix repro_${PREFIX}_ \
+  --remove-stacks-keypairs true \
   --autorun;
