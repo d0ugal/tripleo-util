@@ -7,8 +7,7 @@ if [ ! -f /.dockerenv ]; then
     exit 0;
 fi
 
-PREFIX=$1
-WORKSPACE=~/build/$PREFIX
+WORKSPACE=~/build
 
 if [ -f $WORKSPACE/multinode_hosts ]; then
     export $(awk '/subnode-0/ {print $2}' $WORKSPACE/multinode_hosts);
